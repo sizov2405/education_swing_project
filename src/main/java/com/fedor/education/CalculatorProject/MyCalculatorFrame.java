@@ -1,4 +1,4 @@
-package com.fedor.education;
+package com.fedor.education.CalculatorProject;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -39,6 +39,8 @@ public class MyCalculatorFrame extends JFrame implements ActionListener {
     String operation;
     double second_number;
     double result;
+
+    Calculator calc;
 
     public MyCalculatorFrame(){
         this.setSize(340,540);
@@ -283,25 +285,24 @@ public class MyCalculatorFrame extends JFrame implements ActionListener {
         }
 
         else if(e.getSource() == plus_button){
+            calc = CalculatorFactory.getCalculator(Operations.ADD);
             first_number = Double.parseDouble(textField.getText());
-            operation = "+";
             textField.setText("");
-        }
-        else if(e.getSource() == minus_button){
+        } else if(e.getSource() == minus_button){
+            calc = CalculatorFactory.getCalculator(Operations.SUBTRACT);
             first_number = Double.parseDouble(textField.getText());
-            operation = "-";
             textField.setText("");
         } else if(e.getSource() == multiply_button){
+            calc = CalculatorFactory.getCalculator(Operations.MULTIPLY);
             first_number = Double.parseDouble(textField.getText());
-            operation = "×";
             textField.setText("");
         } else if(e.getSource() == divide){
+            calc = CalculatorFactory.getCalculator(Operations.DIVIDE);
             first_number = Double.parseDouble(textField.getText());
-            operation = "÷";
             textField.setText("");
         } else if(e.getSource() == xSquare){
-            first_number = Double.parseDouble(textField.getText());
             operation = "**";
+            first_number = Double.parseDouble(textField.getText());
             textField.setText("");
         } else if(e.getSource() == squareRootOfX){
             first_number = Double.parseDouble(textField.getText());
@@ -314,38 +315,11 @@ public class MyCalculatorFrame extends JFrame implements ActionListener {
         }
 
         else if (e.getSource() == equals_button) {
-            if(operation == "**"){
-                result = first_number * first_number;
-
-            } else if(operation == "sqrt"){
-                result = Math.sqrt(first_number);
-            } else if(operation == "1/x"){
-                result = 1 / first_number;
-            }
-            else{
                 second_number =  Double.parseDouble(textField.getText());
-                switch (operation) {
-                    case "+":
-                        result = first_number + second_number;
-                        break;
-                    case "-":
-                        result = first_number - second_number;
-                        break;
-                    case "×":
-                        result = first_number * second_number;
-                        break;
-                    case "÷":
-                        result = first_number / second_number;
-                        break;
-
+                if(calc != null){
+                    result = calc.calculate(first_number,second_number);
                 }
-
-            }
-
-
             textField.setText(String.valueOf(result));
-            first_number = result;
-
         }
 
         else if(e.getSource() == C_button){
