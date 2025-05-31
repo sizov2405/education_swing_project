@@ -1,5 +1,8 @@
 package com.fedor.education.CalculatorProject;
 
+import com.fedor.education.CalculatorProject.factory.Bounds;
+import com.fedor.education.CalculatorProject.factory.ButtonFactory;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -7,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MyCalculatorFrame extends JFrame implements ActionListener {
+
+    private Font buttonFont18 = new Font("Consolas",Font.ROMAN_BASELINE,18);
 
     JButton some_space_btn;
     JButton num0;
@@ -144,11 +149,7 @@ public class MyCalculatorFrame extends JFrame implements ActionListener {
         xSquare.setFocusable(false);
         xSquare.setBackground(Color.white);
         xSquare.setFont(new Font("Consolas",Font.ROMAN_BASELINE,18));
-        squareRootOfX = new JButton("√x");
-        squareRootOfX.setBounds(165,250,76,45);
-        squareRootOfX.setFocusable(false);
-        squareRootOfX.setBackground(Color.white);
-        squareRootOfX.setFont(new Font("Consolas",Font.ROMAN_BASELINE,18));
+        squareRootOfX = ButtonFactory.createButton("√x", new Bounds(165,250,76,45), false, Color.white, buttonFont18);
         divide = new JButton("÷");
         divide.setBounds(245,250,76,45);
         divide.setFocusable(false);
