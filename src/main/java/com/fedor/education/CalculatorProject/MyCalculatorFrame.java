@@ -129,11 +129,13 @@ public class MyCalculatorFrame extends JFrame implements ActionListener {
         num8.setFocusable(false);
         num8.setBackground(Color.white);
         num8.setFont(new Font("Consolas",Font.ROMAN_BASELINE,18));
-        num9 = new JButton("9");
-        num9.setBounds(165,300,76,45);
-        num9.setFocusable(false);
-        num9.setBackground(Color.white);
-        num9.setFont(new Font("Consolas",Font.ROMAN_BASELINE,18));
+        num9 = ButtonFactory.createButton("9", new Bounds(165,300,76,45), false, Color.white, buttonFont18, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                numberButtonClick("9");
+            }
+        });
+
         multiply_button = new JButton("×");
         multiply_button.setBounds(245,300,76,45);
         multiply_button.setFocusable(false);
@@ -149,7 +151,13 @@ public class MyCalculatorFrame extends JFrame implements ActionListener {
         xSquare.setFocusable(false);
         xSquare.setBackground(Color.white);
         xSquare.setFont(new Font("Consolas",Font.ROMAN_BASELINE,18));
-        squareRootOfX = ButtonFactory.createButton("√x", new Bounds(165,250,76,45), false, Color.white, buttonFont18);
+        squareRootOfX = ButtonFactory.createButton("√x", new Bounds(165, 250, 76, 45), false, Color.white, buttonFont18, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Добавь все действия в  Operations
+                actionButtonClick(Operations.SQUARE_ROOT);
+            }
+        });
         divide = new JButton("÷");
         divide.setBounds(245,250,76,45);
         divide.setFocusable(false);
@@ -332,6 +340,17 @@ public class MyCalculatorFrame extends JFrame implements ActionListener {
 
 
 
+    }
+
+    private void numberButtonClick(String buttonText) {
+        deleteZero();
+        textField.setText(textField.getText() + buttonText);
+    }
+
+    private void actionButtonClick(Operations operations) {
+        calc = CalculatorFactory.getCalculator(operations);
+        first_number = Double.parseDouble(textField.getText());
+        textField.setText("");
     }
 
     public void deleteZero(){
